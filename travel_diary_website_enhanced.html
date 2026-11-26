@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wanderlust — A Travel Diary</title>
+  <meta name="description" content="A travel diary through Japan, Italy and Switzerland: culture, food and unforgettable places.">
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Elegant display and readable body fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #f7f4ed;
+      --paper: #fffdf8;
+      --forest: #193b32;
+      --forest-light: #31594d;
+      --gold: #c5a46d;
+      --ink: #242722;
+      --muted: #73766e;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--cream); color: var(--ink); font-family: 'DM Sans', sans-serif; }
+    h1, h2, h3, .brand, .serif { font-family: 'Playfair Display', Georgia, serif; }
+    .navbar { background: rgba(247,244,237,.96); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(25,59,50,.10); }
+    .brand { color: var(--forest); font-size: 1.55rem; letter-spacing: .04em; font-weight: 700; }
+    .brand span { color: var(--gold); }
+    .navbar .nav-link { color: #3d463f; font-size: .82rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin-left: .8rem; }
+    .navbar .nav-link:hover { color: var(--gold); }
+    .hero {
+      min-height: 86vh; display: flex; align-items: center; position: relative; color: white;
+      background: linear-gradient(90deg, rgba(12,29,25,.76), rgba(12,29,25,.24)), url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=2000&q=85') center/cover no-repeat;
+    }
+    .hero-content { max-width: 760px; padding-top: 5rem; padding-bottom: 5rem; }
+    .eyebrow { color: var(--gold); text-transform: uppercase; letter-spacing: .22em; font-size: .73rem; font-weight: 700; }
+    .hero h1 { font-size: clamp(3.2rem, 8vw, 6.8rem); line-height: .98; margin: 1.1rem 0 1.4rem; }
+    .hero p { max-width: 550px; color: rgba(255,255,255,.86); font-size: 1.05rem; line-height: 1.8; }
+    .btn-gold { background: var(--gold); color: #17251f; border: 1px solid var(--gold); border-radius: 0; padding: .9rem 1.5rem; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .btn-gold:hover { background: #d7bb8b; border-color: #d7bb8b; color: #17251f; }
+    .section-pad { padding: 6rem 0; }
+    .section-kicker { color: #a18350; text-transform: uppercase; letter-spacing: .2em; font-size: .72rem; font-weight: 700; }
+    .section-title { color: var(--forest); font-size: clamp(2.25rem, 4vw, 3.6rem); line-height: 1.12; }
+    .section-intro { max-width: 650px; color: var(--muted); line-height: 1.85; }
+    .destination-card { border: 0; border-radius: 0; background: var(--paper); height: 100%; box-shadow: 0 12px 35px rgba(32,42,34,.07); transition: transform .25s ease, box-shadow .25s ease; }
+    .destination-card:hover { transform: translateY(-7px); box-shadow: 0 18px 42px rgba(32,42,34,.13); }
+    .destination-card img { width: 100%; height: 290px; object-fit: cover; }
+    .destination-card .card-body { padding: 1.7rem; }
+    .country-tag { color: #a18350; text-transform: uppercase; letter-spacing: .16em; font-size: .68rem; font-weight: 700; }
+    .destination-card h3 { color: var(--forest); font-size: 1.8rem; }
+    .destination-card p { color: var(--muted); line-height: 1.75; font-size: .93rem; }
+    .text-link { color: var(--forest); text-decoration: none; font-weight: 700; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; border-bottom: 1px solid var(--gold); padding-bottom: .35rem; }
+    .text-link:hover { color: #9a7744; }
+    .country-section { padding: 6rem 0; }
+    .country-section.alt { background: var(--paper); }
+    .country-photo { width: 100%; height: 510px; object-fit: cover; }
+    .country-copy { padding: 1.5rem 2rem; }
+    .country-copy h2 { color: var(--forest); font-size: clamp(2.5rem, 5vw, 4rem); }
+    .country-copy p { color: var(--muted); line-height: 1.9; }
+    .fact-list { list-style: none; padding: 0; margin: 1.5rem 0 2rem; }
+    .fact-list li { padding: .65rem 0; border-bottom: 1px solid #e9e4d9; color: #4d554e; }
+    .fact-list strong { color: var(--forest); }
+    .food-strip { background: var(--forest); color: white; padding: 4.5rem 0; }
+    .food-strip h2 { font-size: clamp(2.2rem, 4vw, 3.4rem); }
+    .food-item { border-left: 1px solid rgba(255,255,255,.25); padding-left: 1.2rem; }
+    .food-item h3 { color: #e2c99d; font-size: 1.45rem; }
+    .food-item p { color: rgba(255,255,255,.72); font-size: .9rem; line-height: 1.7; }
+    .gallery-img { width: 100%; height: 260px; object-fit: cover; display: block; }
+    .gallery-tall { height: 540px; }
+    .about-panel { background: #eae5d9; padding: 3rem; }
+    .about-panel p { color: #62675f; line-height: 1.9; }
+    .footer { background: #122c25; color: rgba(255,255,255,.75); padding: 4rem 0 2rem; }
+    .footer h2 { color: white; font-size: 2rem; }
+    .footer a { color: #e2c99d; text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
+    .footer small { color: rgba(255,255,255,.52); }
+
+    /* --- Editorial motion and upgraded destination cards --- */
+    @keyframes heroReveal {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slowDrift {
+      0%, 100% { background-position: center 48%; }
+      50% { background-position: center 54%; }
+    }
+    @keyframes softFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes shimmerLine {
+      from { background-position: 0 0; }
+      to { background-position: 200% 0; }
+    }
+    .hero {
+      overflow: hidden;
+      animation: slowDrift 18s ease-in-out infinite;
+    }
+    .hero-content > * {
+      opacity: 0;
+      animation: heroReveal .85s ease forwards;
+    }
+    .hero-content > *:nth-child(1) { animation-delay: .12s; }
+    .hero-content > *:nth-child(2) { animation-delay: .28s; }
+    .hero-content > *:nth-child(3) { animation-delay: .46s; }
+    .hero-content > *:nth-child(4) { animation-delay: .64s; }
+
+    .destination-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      isolation: isolate;
+      box-shadow: 0 14px 38px rgba(24, 45, 36, .10);
+      transition: transform .45s cubic-bezier(.2,.8,.2,1),
+                  box-shadow .45s ease;
+    }
+    .destination-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      border: 1px solid rgba(255,255,255,.55);
+      border-radius: inherit;
+    }
+    .destination-card:hover {
+      transform: translateY(-12px) scale(1.015);
+      box-shadow: 0 28px 58px rgba(24, 45, 36, .19);
+    }
+    .destination-card .image-wrap {
+      height: 290px;
+      overflow: hidden;
+      position: relative;
+    }
+    .destination-card .image-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 35% 0 0;
+      background: linear-gradient(transparent, rgba(9, 25, 20, .58));
+      pointer-events: none;
+    }
+    .destination-card img {
+      height: 100%;
+      transition: transform .8s cubic-bezier(.2,.7,.2,1), filter .5s ease;
+    }
+    .destination-card:hover img {
+      transform: scale(1.09);
+      filter: saturate(1.12);
+    }
+    .destination-card .image-label {
+      position: absolute;
+      z-index: 2;
+      left: 1.25rem;
+      bottom: 1.1rem;
+      color: #fff;
+      font-size: .72rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .destination-card .card-body {
+      padding: 1.65rem 1.7rem 1.8rem;
+    }
+    .destination-card h3 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .destination-card h3 .card-number {
+      font-family: 'DM Sans', sans-serif;
+      font-size: .72rem;
+      letter-spacing: .12em;
+      color: #a18350;
+      border: 1px solid #e7dcc8;
+      border-radius: 99px;
+      padding: .42rem .68rem;
+    }
+    .destination-card .text-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      transition: gap .25s ease, color .25s ease;
+    }
+    .destination-card:hover .text-link { gap: .85rem; color: #9a7744; }
+
+    .country-photo {
+      border-radius: 18px;
+      box-shadow: 0 22px 55px rgba(25, 59, 50, .16);
+      transition: transform .6s ease, box-shadow .6s ease;
+    }
+    .country-photo:hover {
+      transform: scale(1.018);
+      box-shadow: 0 30px 65px rgba(25, 59, 50, .22);
+    }
+    .gallery-img {
+      border-radius: 14px;
+      transition: transform .5s ease, filter .5s ease, box-shadow .5s ease;
+    }
+    .gallery-img:hover {
+      transform: translateY(-5px) scale(1.015);
+      filter: saturate(1.12);
+      box-shadow: 0 18px 38px rgba(20, 35, 28, .18);
+    }
+    .btn-gold {
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+    }
+    .btn-gold:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 26px rgba(197, 164, 109, .28);
+    }
+    .section-kicker { display: inline-block; }
+    .food-item {
+      transition: transform .3s ease;
+    }
+    .food-item:hover { transform: translateX(7px); }
+    .about-panel { border-radius: 18px; }
+    .navbar { transition: box-shadow .3s ease; }
+    .navbar:has(.nav-link:hover) { box-shadow: 0 8px 24px rgba(25,59,50,.08); }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+
+    @media (max-width: 767.98px) {
+      .hero { min-height: 78vh; }
+      .section-pad, .country-section { padding: 4rem 0; }
+      .country-photo { height: 330px; }
+      .country-copy { padding: 2rem .25rem 0; }
+      .gallery-img, .gallery-tall { height: 250px; }
+      .about-panel { padding: 2rem 1.4rem; }
+      .food-item { margin-top: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container py-2">
+      <a class="navbar-brand brand" href="#home">WANDER<span>•</span>DIARY</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#destinations">Destinations</a></li>
+          <li class="nav-item"><a class="nav-link" href="#japan">Japan</a></li>
+          <li class="nav-item"><a class="nav-link" href="#italy">Italy</a></li>
+          <li class="nav-item"><a class="nav-link" href="#switzerland">Switzerland</a></li>
+          <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="home">
+    <div class="container">
+      <div class="hero-content">
+        <div class="eyebrow">A journey across three beautiful worlds</div>
+        <h1>Find your<br><em>somewhere.</em></h1>
+        <p>From quiet streets beneath Japanese lanterns to the timeless romance of Italy and the wild beauty of the Swiss Alps — come along on a journey made of little discoveries.</p>
+        <a class="btn btn-gold mt-3" href="#destinations">Explore the journey</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section-pad" id="destinations">
+      <div class="container">
+        <div class="text-center mb-5">
+          <div class="section-kicker mb-3">Three countries · One diary</div>
+          <h2 class="section-title">Places that stay with you</h2>
+          <p class="section-intro mx-auto mt-3">Every destination has its own rhythm, flavours and stories. Choose a place and start exploring its culture, landscapes and local experiences.</p>
+        </div>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <article class="card destination-card">
+              <div class="image-wrap"><img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=900&q=80" alt="Traditional street in Kyoto, Japan"><span class="image-label">East Asia · 01</span></div>
+              <div class="card-body"><div class="country-tag mb-2">01 · East Asia</div><h3>Japan <span class="card-number">01 / 03</span></h3><p>Ancient temples, glowing city streets, seasonal traditions and thoughtful cuisine.</p><a class="text-link" href="#japan">Discover Japan →</a></div>
+            </article>
+          </div>
+          <div class="col-md-4">
+            <article class="card destination-card">
+              <div class="image-wrap"><img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=900&q=80" alt="Colourful coastal village in Italy"><span class="image-label">Southern Europe · 02</span></div>
+              <div class="card-body"><div class="country-tag mb-2">02 · Southern Europe</div><h3>Italy <span class="card-number">02 / 03</span></h3><p>Art-filled cities, sunlit coastlines, historic streets and unforgettable food.</p><a class="text-link" href="#italy">Discover Italy →</a></div>
+            </article>
+          </div>
+          <div class="col-md-4">
+            <article class="card destination-card">
+              <div class="image-wrap"><img src="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=900&q=80" alt="Snowy mountain landscape in Switzerland"><span class="image-label">Central Europe · 03</span></div>
+              <div class="card-body"><div class="country-tag mb-2">03 · Central Europe</div><h3>Switzerland <span class="card-number">03 / 03</span></h3><p>Alpine villages, clear lakes, mountain trails and breathtaking open spaces.</p><a class="text-link" href="#switzerland">Discover Switzerland →</a></div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="country-section alt" id="japan">
+      <div class="container"><div class="row align-items-center g-4">
+        <div class="col-lg-6"><img class="country-photo" src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?auto=format&fit=crop&w=1200&q=85" alt="Pagoda and Mount Fuji in Japan"></div>
+        <div class="col-lg-6"><div class="country-copy"><div class="section-kicker mb-3">01 · Japan</div><h2>Where tradition meets tomorrow.</h2><p>Japan brings together peaceful gardens, centuries-old temples and energetic modern cities. Take time to notice the details: a quiet shrine, a neighbourhood market or the glow of lanterns after sunset.</p>
+          <ul class="fact-list"><li><strong>Culture:</strong> Tea ceremony, calligraphy and seasonal festivals</li><li><strong>Food:</strong> Sushi, ramen and matcha sweets</li><li><strong>Experience:</strong> Explore Kyoto's historic streets and a traditional market</li></ul>
+          <a class="text-link" href="#food">Explore local flavours →</a></div></div>
+      </div></div>
+    </section>
+
+    <section class="country-section" id="italy">
+      <div class="container"><div class="row align-items-center g-4">
+        <div class="col-lg-6 order-lg-2"><img class="country-photo" src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=1200&q=85" alt="Italian coastal village with colourful buildings"></div>
+        <div class="col-lg-6 order-lg-1"><div class="country-copy"><div class="section-kicker mb-3">02 · Italy</div><h2>La dolce vita, every day.</h2><p>Italy is a celebration of art, architecture, food and everyday life. Wander through historic piazzas, admire beautiful old buildings and make room for a long meal at a local trattoria.</p>
+          <ul class="fact-list"><li><strong>Culture:</strong> Renaissance art, music and lively piazzas</li><li><strong>Food:</strong> Pizza, pasta and gelato</li><li><strong>Experience:</strong> Walk through Rome's historic centre or explore Venice's canals</li></ul>
+          <a class="text-link" href="#gallery">See the travel gallery →</a></div></div>
+      </div></div>
+    </section>
+
+    <section class="country-section alt" id="switzerland">
+      <div class="container"><div class="row align-items-center g-4">
+        <div class="col-lg-6"><img class="country-photo" src="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=1200&q=85" alt="Swiss mountain range beneath a colourful sky"></div>
+        <div class="col-lg-6"><div class="country-copy"><div class="section-kicker mb-3">03 · Switzerland</div><h2>Into the great outdoors.</h2><p>Switzerland invites you to slow down and look around. Snow-covered peaks, green valleys and glassy lakes create a dramatic setting for scenic train rides and outdoor adventures.</p>
+          <ul class="fact-list"><li><strong>Culture:</strong> Alpine traditions, local crafts and village festivals</li><li><strong>Food:</strong> Cheese fondue, rösti and Swiss chocolate</li><li><strong>Experience:</strong> Take a mountain walk and enjoy a lakeside village</li></ul>
+          <a class="text-link" href="#about">About this journey →</a></div></div>
+      </div></div>
+    </section>
+
+    <section class="food-strip" id="food">
+      <div class="container"><div class="row align-items-start g-4">
+        <div class="col-lg-4"><div class="section-kicker mb-3">A taste of the journey</div><h2>Good food.<br><em>Great memories.</em></h2><p class="mt-3" style="color:rgba(255,255,255,.72);line-height:1.8">A place can be remembered through its flavours. Here are a few dishes to look out for along the way.</p></div>
+        <div class="col-lg-8"><div class="row g-4">
+          <div class="col-md-4"><div class="food-item"><h3>Japan</h3><p><strong>Sushi & ramen</strong><br>Fresh, balanced flavours and comforting bowls that tell a story of regional food traditions.</p></div></div>
+          <div class="col-md-4"><div class="food-item"><h3>Italy</h3><p><strong>Pizza & gelato</strong><br>Simple ingredients, regional recipes and the pleasure of enjoying food slowly.</p></div></div>
+          <div class="col-md-4"><div class="food-item"><h3>Switzerland</h3><p><strong>Fondue & chocolate</strong><br>Cosy mountain meals and a much-loved chocolate-making tradition.</p></div></div>
+        </div></div>
+      </div></div>
+    </section>
+
+    <section class="section-pad" id="gallery">
+      <div class="container"><div class="row align-items-end mb-4"><div class="col-md-8"><div class="section-kicker mb-3">Postcards from the road</div><h2 class="section-title">A few moments to remember</h2></div><div class="col-md-4 text-md-end"><p class="section-intro ms-md-auto mb-0">A visual collection of city scenes, coastlines and mountain views.</p></div></div>
+        <div class="row g-3">
+          <div class="col-md-6"><img class="gallery-img gallery-tall" src="https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?auto=format&fit=crop&w=1000&q=80" alt="Japanese pagoda surrounded by trees"></div>
+          <div class="col-md-6"><div class="row g-3"><div class="col-12"><img class="gallery-img" src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1000&q=80" alt="Venice canal and historic buildings"></div><div class="col-12"><img class="gallery-img" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1000&q=80" alt="Dramatic mountain landscape in the Alps"></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-pad pt-0" id="about">
+      <div class="container"><div class="about-panel"><div class="row align-items-center g-4"><div class="col-lg-4"><div class="section-kicker mb-3">The travel diary</div><h2 class="section-title mb-0">The world is best read one journey at a time.</h2></div><div class="col-lg-8"><p>This diary follows one traveller through Japan, Italy and Switzerland — three destinations with different landscapes, traditions and tastes. It is a reminder to stay curious, respect local cultures and find beauty in both famous landmarks and everyday moments.</p><p class="mb-0"><strong>Made by:</strong> [Add your group members' names] &nbsp; <strong>Batch:</strong> [Add batch] &nbsp; <strong>Group:</strong> [Add group number]</p></div></div></div></div>
+    </section>
+  </main>
+
+  <footer class="footer" id="credits">
+    <div class="container"><div class="row g-4"><div class="col-lg-5"><div class="brand text-white mb-3">WANDER<span>•</span>DIARY</div><h2>Until the next adventure.</h2><p class="mt-3">A travel diary through Japan, Italy and Switzerland.</p></div><div class="col-lg-3"><h6 class="text-white text-uppercase mb-3" style="letter-spacing:.12em">Explore</h6><p><a href="#japan">Japan</a></p><p><a href="#italy">Italy</a></p><p><a href="#switzerland">Switzerland</a></p><p><a href="#gallery">Gallery</a></p></div><div class="col-lg-4"><h6 class="text-white text-uppercase mb-3" style="letter-spacing:.12em">Photo credits</h6><p class="small">Photographs are loaded from Unsplash. Before submission, open each image's source page, verify its licence and add the photographer's name and exact image-source link here.</p><p class="small">Fonts: Google Fonts — Playfair Display and DM Sans. Layout framework: Bootstrap 5.3.</p></div></div><hr class="border-light opacity-25 my-4"><div class="d-flex flex-column flex-md-row justify-content-between gap-2"><small>© 2026 Wander Diary · Student travel project</small><small>Designed for curious travellers</small></div></div>
+  </footer>
+
+  <!-- Bootstrap bundle is included for the responsive navigation menu; no custom JavaScript is used. -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
